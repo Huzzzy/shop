@@ -28,6 +28,16 @@ Route::group(['prefix' => 'categories'], function () {
     Route::delete('/{category}', \App\Http\Controllers\Category\UpdateController::class)->name('category.delete');
 });
 
+Route::group(['prefix' => 'groups'], function () {
+    Route::get('/', \App\Http\Controllers\Group\IndexController::class)->name('group.index');
+    Route::get('/create', \App\Http\Controllers\Group\CreateController::class)->name('group.create');
+    Route::post('/', \App\Http\Controllers\Group\StoreController::class)->name('group.store');
+    Route::get('/{group}/edit', \App\Http\Controllers\Group\EditController::class)->name('group.edit');
+    Route::get('/{group}', \App\Http\Controllers\Group\ShowController::class)->name('group.show');
+    Route::patch('/{group}', \App\Http\Controllers\Group\DeleteController::class)->name('group.update');
+    Route::delete('/{group}', \App\Http\Controllers\Group\UpdateController::class)->name('group.delete');
+});
+
 Route::group(['prefix' => 'colors'], function () {
     Route::get('/', \App\Http\Controllers\Color\IndexController::class)->name('color.index');
     Route::get('/create', \App\Http\Controllers\Color\CreateController::class)->name('color.create');
