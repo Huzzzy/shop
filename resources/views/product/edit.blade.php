@@ -39,6 +39,7 @@
                         <textarea name="content" cols="30" rows="10" class="form-control" placeholder="Содержание">{{ old('content', $product->content) }}</textarea>
                     </div>
                     <div class="form-group">
+                        <img src="{{ $product->imageUrl }}" alt="#" style="width: 300px; height: 300px;">
                         <div class="input-group">
                             <div class="custom-file">
                                 <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile">
@@ -48,6 +49,9 @@
                                 <span class="input-group-text">Загрузка</span>
                             </div>
                         </div>
+                        @error('preview_image')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <input type="text" value="{{ old('price', $product->price) }}" name="price"
