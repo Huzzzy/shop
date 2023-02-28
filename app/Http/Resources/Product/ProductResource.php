@@ -3,10 +3,11 @@
 namespace App\Http\Resources\Product;
 
 use App\Models\Product;
+use App\Http\Resources\Color\ColorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Category\CategoryResource;
-use App\Http\Resources\Color\ColorResource;
 use App\Http\Resources\Product\ProductMinResource;
+use App\Http\Resources\Product\ProductImageResource;
 
 class ProductResource extends JsonResource
 {
@@ -24,12 +25,12 @@ class ProductResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'content' => $this->content,
-            'preview_image' => $this->preview_image,
             'image_url' => $this->imageUrl,
             'price' => $this->price,
             'count' => $this->count,
             'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category),
+            'product_images' => ProductImageResource::collection($this->productImages),
             'group_products' => ProductMinResource::collection($products),
         ];
     }
