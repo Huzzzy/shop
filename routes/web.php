@@ -24,8 +24,8 @@ Route::group(['prefix' => 'categories'], function () {
     Route::post('/', \App\Http\Controllers\Category\StoreController::class)->name('category.store');
     Route::get('/{category}/edit', \App\Http\Controllers\Category\EditController::class)->name('category.edit');
     Route::get('/{category}', \App\Http\Controllers\Category\ShowController::class)->name('category.show');
-    Route::patch('/{category}', \App\Http\Controllers\Category\DeleteController::class)->name('category.update');
-    Route::delete('/{category}', \App\Http\Controllers\Category\UpdateController::class)->name('category.delete');
+    Route::patch('/{category}', \App\Http\Controllers\Category\UpdateController::class)->name('category.update');
+    Route::delete('/{category}', \App\Http\Controllers\Category\DeleteController::class)->name('category.delete');
 });
 
 Route::group(['prefix' => 'groups'], function () {
@@ -34,8 +34,8 @@ Route::group(['prefix' => 'groups'], function () {
     Route::post('/', \App\Http\Controllers\Group\StoreController::class)->name('group.store');
     Route::get('/{group}/edit', \App\Http\Controllers\Group\EditController::class)->name('group.edit');
     Route::get('/{group}', \App\Http\Controllers\Group\ShowController::class)->name('group.show');
-    Route::patch('/{group}', \App\Http\Controllers\Group\DeleteController::class)->name('group.update');
-    Route::delete('/{group}', \App\Http\Controllers\Group\UpdateController::class)->name('group.delete');
+    Route::patch('/{group}', \App\Http\Controllers\Group\UpdateController::class)->name('group.update');
+    Route::delete('/{group}', \App\Http\Controllers\Group\DeleteController::class)->name('group.delete');
 });
 
 Route::group(['prefix' => 'colors'], function () {
