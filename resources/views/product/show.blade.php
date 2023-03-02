@@ -78,6 +78,10 @@
                                         <td>{{ $product->category->title }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Группа</th>
+                                        <td>{{ $product->group->title }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Теги</th>
                                         <td>
                                             @foreach ($product->tags as $tag)

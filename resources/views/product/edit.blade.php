@@ -135,6 +135,17 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="form-group w-50">
+                <select name="group_id" class="form-control select2" style="width: 100%;">
+                    <option selected="selected" disabled>Выберите группу</option>
+                    @foreach ($groups as $group)
+                        <option value="{{ $group->id }}"
+                            {{ $group->id == old('group_id', $group->id) ? 'selected' : '' }}>
+                            {{ $group->title }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Редактировать">
             </div>

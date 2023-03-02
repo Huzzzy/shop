@@ -94,7 +94,17 @@
                                     {{ $category->title }}
                                 </option>
                             @endforeach
-
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="group_id" class="form-control select2" style="width: 100%;">
+                            <option selected="selected" disabled>Выберите группу</option>
+                            @foreach ($groups as $group)
+                                <option value="{{ $group->id }}"
+                                    {{ $group->id == old('group_id') ? 'selected' : '' }}>
+                                    {{ $group->title }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

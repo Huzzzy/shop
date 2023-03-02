@@ -7,6 +7,7 @@ use App\Models\Color;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Group;
 
 class CreateController extends Controller
 {
@@ -15,6 +16,7 @@ class CreateController extends Controller
         $tags = Tag::all();
         $categories = Category::all();
         $colors = Color::all();
-        return view('product.create', compact('tags', 'categories', 'colors'));
+        $groups = Group::all();
+        return view('product.create', compact('tags', 'categories', 'colors', 'groups'));
     }
 }

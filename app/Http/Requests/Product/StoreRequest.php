@@ -33,6 +33,7 @@ class StoreRequest extends FormRequest
             'count' => 'required|integer|max:1264',
             'is_published' => 'nullable',
             'category_id' => 'nullable|integer|exists:categories,id',
+            'group_id' => 'nullable|integer|exists:groups,id',
             'user_id' => 'nullable|integer|exists:users,id',
             'tags' => 'nullable|array',
             'tags.*' => 'nullable|integer|exists:tags,id',
