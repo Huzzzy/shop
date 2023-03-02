@@ -65,6 +65,15 @@
                                                 style="width: 300px; height: 300px;"></td>
                                     </tr>
                                     <tr>
+                                        <th>Фото товара</th>
+                                        <td>
+                                            @foreach ($productImages as $productImage)
+                                                <img src="{{ $productImage->imageUrl }}" alt="#"
+                                                    style="width: 300px; height: 300px;">
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>Категория</th>
                                         <td>{{ $product->category->title }}</td>
                                     </tr>
