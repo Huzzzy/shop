@@ -27,23 +27,33 @@
                     @csrf
                     @method('patch')
 
-                    <div class="form-group">
+                    <div class="form-group w-75">
                         <input type="text" value="{{ old('title', $product->title) }}" name="title"
                             class="form-control" placeholder="Наименование">
+                        @error('title')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="form-group w-75">
                         <input type="text" value="{{ old('description', $product->description) }}" name="description"
                             class="form-control" placeholder="Описание">
+                        @error('description')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="form-group w-75">
                         <textarea name="content" cols="30" rows="10" class="form-control" placeholder="Содержание">{{ old('content', $product->content) }}</textarea>
+                        @error('content')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="form-group w-100">
+                        <h3>Текущее фото превью</h3>
                         <img src="{{ $product->imageUrl }}" alt="#" style="width: 300px; height: 300px;">
-                        <div class="input-group">
+                        <div class="input-group w-75">
                             <div class="custom-file">
                                 <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile">
-                                <label class="custom-file-label" for="exampleInputFile">Выберите файл</label>
+                                <label class="custom-file-label" for="exampleInputFile">Выберите фото превью</label>
                             </div>
                             <div class="input-group-append">
                                 <span class="input-group-text">Загрузка</span>
@@ -53,61 +63,84 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <input type="text" value="{{ old('price', $product->price) }}" name="price"
-                            class="form-control" placeholder="Цена">
+                    <div class="form-group w-100">
+                        <h3>Текущие фото товаров</h3>
+                        @foreach ($productImages as $productImage)
+                            <img src="{{ $productImage->imageUrl }}" alt="#" style="width: 300px; height: 300px;">
+                        @endforeach
+                        <div class="input-group w-75">
+                            <div class="custom-file">
+                                <input name="product_images[]" type="file" class="custom-file-input" multiple>
+                                <label class="custom-file-label">Выберите фото товаров</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Загрузка</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" value="{{ old('count', $product->count) }}" name="count"
-                            class="form-control" placeholder="Количество">
-                    </div>
-                    <div class="form-group">
-                        <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Выберите тег"
-                            style="width: 100%;">
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}"
-                                    {{ is_array($product->tags->pluck('id')->toArray()) &&
-                                    in_array($tag->id, $product->tags->pluck('id')->toArray())
-                                        ? 'selected'
-                                        : '' }}>
-                                    {{ $tag->title }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Выберите цвет"
-                            style="width: 100%;">
-                            @foreach ($colors as $color)
-                                <option value="{{ $color->id }}"
-                                    {{ is_array($product->colors->pluck('id')->toArray()) &&
-                                    in_array($color->id, $product->colors->pluck('id')->toArray())
-                                        ? 'selected'
-                                        : '' }}>
-                                    {{ $color->title }}
-                                </option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select name="category_id" class="form-control select2" style="width: 100%;">
-                            <option selected="selected" disabled>Выберите категорию</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ $category->id == old('category_id', $category->id) ? 'selected' : '' }}>
-                                    {{ $category->title }}
-                                </option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Редактировать">
-                    </div>
-                </form>
             </div>
-            <!-- /.row -->
+            <div class="form-group w-50">
+                <input type="text" value="{{ old('price', $product->price) }}" name="price" class="form-control"
+                    placeholder="Цена">
+                @error('price')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group w-50">
+                <input type="text" value="{{ old('count', $product->count) }}" name="count" class="form-control"
+                    placeholder="Количество">
+                @error('count')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group w-50">
+                <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Выберите тег"
+                    style="width: 100%;">
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}"
+                            {{ is_array($product->tags->pluck('id')->toArray()) &&
+                            in_array($tag->id, $product->tags->pluck('id')->toArray())
+                                ? 'selected'
+                                : '' }}>
+                            {{ $tag->title }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group w-50">
+                <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Выберите цвет"
+                    style="width: 100%;">
+                    @foreach ($colors as $color)
+                        <option value="{{ $color->id }}"
+                            {{ is_array($product->colors->pluck('id')->toArray()) &&
+                            in_array($color->id, $product->colors->pluck('id')->toArray())
+                                ? 'selected'
+                                : '' }}>
+                            {{ $color->title }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group w-50">
+                <select name="category_id" class="form-control select2" style="width: 100%;">
+                    <option selected="selected" disabled>Выберите категорию</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ $category->id == old('category_id', $category->id) ? 'selected' : '' }}>
+                            {{ $category->title }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Редактировать">
+            </div>
+            </form>
+        </div>
+        <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
 @endsection

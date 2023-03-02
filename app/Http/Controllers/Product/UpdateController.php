@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -18,10 +19,11 @@ class UpdateController extends Controller
         try {
             DB::beginTransaction();
 
-            if (isset($data['tags'], $data['colors'])) {
+            if (isset($data['tags'], $data['colors'], $data['product_images'])) {
                 $tagsIds = $data['tags'];
                 $colorsIds = $data['colors'];
-                unset($data['tags'], $data['colors']);
+                $productImages = $data['product_images'];
+                unset($data['tags'], $data['colors'], $data['product_images']);
             }
 
             if (isset($data['preview_image'])) {
@@ -29,6 +31,34 @@ class UpdateController extends Controller
             }
 
             $product->update($data);
+
+            $currentImages = ProductImage::where('product_id', $product->id)->get();
+
+            $imagesData = [];
+
+            if (isset($productImages)) {
+                foreach ($productImages as $productImage) {
+                    $count = ProductImage::where('product_id',  $product->id)->count();
+
+                    if ($count > 3) continue;
+
+                    $filePath = Storage::disk('public')->put('/images', $productImage);
+                    $data = [
+                        'product_id' => $product->id,
+                        'file_path' => $filePath,
+                    ];
+                    $imagesData[] = $data;
+
+                }
+            }
+            if(isset($imagesData)) {
+                $tmp = 0;
+                foreach ($currentImages as $currentImage ) {
+                    $currentImage->update($imagesData[$tmp]);
+                    $tmp++;
+                }
+            }
+
             if (isset($tagsIds, $colorsIds)) {
                 $product->tags()->sync($tagsIds);
                 $product->colors()->sync($colorsIds);
